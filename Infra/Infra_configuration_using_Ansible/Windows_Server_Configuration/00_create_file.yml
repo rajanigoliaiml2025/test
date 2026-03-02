@@ -1,0 +1,4 @@
+- name: Create an empty file on Windows
+  ansible.windows.win_file:
+    path: D:\Traning_Data\GitOps\ansible_work_sheet.txt
+    state: touch

@@ -1,0 +1,10 @@
+// Simple deployment script to restart a service
+def deployCommand = "sudo systemctl restart buy-app"
+def process = deployCommand.execute()
+process.waitFor() 
+
+if (process.exitValue() == 0) {
+    println "Deployment successful: ${process.text}"
+} else {
+    println "Deployment failed: ${process.err.text}"
+}

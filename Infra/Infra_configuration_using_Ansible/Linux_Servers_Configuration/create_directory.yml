@@ -1,0 +1,9 @@
+---
+- name: Local Machine Setup
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: /etc/GitOps
+        state: directory

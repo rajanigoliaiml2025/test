@@ -1,0 +1,31 @@
+pipeline {
+    agent any // Defines where the pipeline runs (required)
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the application...' // Basic step
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'mvn test'
+            }
+        }
+    }
+    
+    // Built-in post-build actions
+    post {
+        always {
+            echo 'I will always run, regardless of build status!'
+        }
+        success {
+            echo 'Build was successful!'
+        }
+        failure {
+            echo 'Build failed.'
+        }
+    }
+}

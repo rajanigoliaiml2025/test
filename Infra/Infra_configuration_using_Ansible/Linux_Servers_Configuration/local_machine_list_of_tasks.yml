@@ -1,0 +1,9 @@
+---
+- name: Local Machine Setup
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Ensure a directory exists
+      ansible.builtin.file:
+        path: ~/my_local_folder
+        state: directory

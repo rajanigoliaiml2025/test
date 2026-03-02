@@ -1,0 +1,15 @@
+---
+- name: Local Machine Setup
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Create multiple directories with specific permissions
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0775'
+      loop:
+        - /var/www/html
+        - /var/www/logs

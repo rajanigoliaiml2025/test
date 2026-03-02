@@ -1,0 +1,53 @@
+---
+- name: Initial Linux Server Setup
+  hosts: all
+  become: true  # Runs tasks with sudo privileges
+  vars:
+    username: "deploy_user"
+
+  tasks:
+    # 1. Update all packages to the latest version
+    - name: Update and upgrade apt packages (Debian/Ubuntu)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == "Debian"
+
+    - name: Update all yum packages (RHEL/CentOS)
+      ansible.builtin.yum:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    # 2. Create a new administrative user
+    - name: Create a new user with sudo access
+      ansible.builtin.user:
+        name: "{{ username }}"
+        state: present
+        groups: sudo, wheel
+        append: true
+        shell: /bin/bash
+
+    # 3. Install common utilities
+    - name: Install basic packages
+      ansible.builtin.package:
+        name:
+          - curl
+          - vim
+          - git
+          - ufw
+        state: present
+
+    # 4. Configure Firewall (UFW for Ubuntu)
+    - name: Allow SSH through firewall
+      community.general.ufw:
+        rule: allow
+        name: OpenSSH
+        state: enabled
+
+    # 5. Manage Services
+    - name: Ensure SSH service is running and enabled
+      ansible.builtin.service:
+        name: ssh
+        state: started
+        enabled: yes

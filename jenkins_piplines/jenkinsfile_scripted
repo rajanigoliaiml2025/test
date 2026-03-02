@@ -1,0 +1,21 @@
+node { // Defines the execution environment
+    try {
+        stage('Build') {
+            echo 'Building...'
+            sh 'mvn clean install'
+        }
+        stage('Test') {
+            echo 'Testing...'
+            sh 'mvn test'
+        }
+        currentBuild.result = 'SUCCESS'
+    } catch (Exception e) {
+        // Manual error handling
+        currentBuild.result = 'FAILURE'
+        echo "Build failed with error: ${e.message}"
+        throw e
+    } finally {
+        echo 'Cleaning up workspace...'
+        cleanWs()
+    }
+}

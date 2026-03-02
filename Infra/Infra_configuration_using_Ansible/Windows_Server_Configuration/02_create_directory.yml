@@ -1,0 +1,12 @@
+- name: Create Ansible direcoty for AI Projects
+  ansible.windows.win_file:
+    path: D:\Traning_Data\GitOps\
+    state: directory
+- name: Create an empty file on Windows
+  ansible.windows.win_file:
+    path: D:\Traning_Data\GitOps\ansible_work_sheet.txt
+    state: touch
+- name: Create a file with specific content
+  ansible.windows.win_copy:
+    content: "This is ansible work to create a sample file with connect...!!!"
+    dest: D:\Traning_Data\GitOps\ansible_work_sheet.txt

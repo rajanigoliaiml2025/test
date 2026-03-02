@@ -1,0 +1,62 @@
+# Declarative Pipeline Example
+#This is the standard modern approach for Jenkins. It defines a structured flow for deploying an application.
+
+pipeline {
+    agent any 
+    stages {
+        stage('Auth_Stage'){
+
+         steps{
+            echo 'We need to connect Azure CLoud Account from Github ...!!   GH - AzureAcount'
+            sub_id -- shared, internal , grup, client, vendor
+            client_id
+            client_secret
+            app_id
+         }
+        }
+        stage('Acr_Stage'){
+
+         steps{
+            echo 'We need to connect Azure CLoud Account from Github ...!!   GH - AzureAcount'
+            sub_id -- shared, internal , grup, client, vendor
+            client_id
+            client_secret
+            app_id
+         }
+        }
+
+
+ml-code(python) --> raw files--->> zip(package) -- jar,war,sar,ear, zip , rar, -- Image by Docker -- azure account --- ACR -- rajini-ml-code-imag-nov-23-dev-enviroment-v-0-0-1 -- container -- volume- azure disk, azure stoage, azure filesystem 
+
+
+connect
+Auth_Stage
+athoriz
+
+
+
+        stage('Build') {
+            steps {
+                echo 'Compiling application...'
+                sh 'mvn clean package' // Using Maven to build
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying to Production...'
+                // Example: Deploying to Kubernetes
+                sh 'kubectl apply -f deployment.yaml' 
+            }
+        }
+    }
+}
+
+
+
+parallel --. timesaving 

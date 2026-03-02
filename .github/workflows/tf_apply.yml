@@ -1,0 +1,64 @@
+name: "Terraform-Apply-for_deploying-Azure-Cloud-Resource"
+on:
+    push:
+        branches:
+            - main
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read   # Usually required to checkout code
+jobs:
+    South_Central_US_Deployment:
+        name: "South_Central_US_Deployment - Terraform Deployment"
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v2
+
+            - name: setup Terraform
+              uses: hashicorp/setup-terraform@v1
+              with:
+                cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+            - name: Azure login
+              uses: azure/login@v2
+              with:
+                 #creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+                 subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+                 tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+                 client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+ 
+            - name: Terraform Init
+              id: init
+              run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" init
+
+            - name: Terraform Plan
+              id: plan
+              if: github.event_name == 'push'
+              #run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" plan -no-color
+              run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" plan -generate-config-out=generated.tf
+              #continue-on-error: true
+            
+
+            - name: Terraform plan Status
+              if: steps.plan.outcome == 'failure'
+              run: exit 1
+            
+            - name: Terraform Apply
+              if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+              #run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" apply -auto-approve
+              run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" apply -auto-approve
+
+            # - name: Terraform Destroy
+            #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+            #   run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" destroy
+    North_Central_US_Deployment:
+      name: "North_Central_US_Deployment - Terraform Deployment"
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "Deploying resources in parallel regions - North_Central_US_Deployment"
+    Central_US_Deployment:
+      name: "Central_US_Deployment - Terraform Deployment"
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "Deploying resources in parallel regions - i.e Central_US_Deployment"

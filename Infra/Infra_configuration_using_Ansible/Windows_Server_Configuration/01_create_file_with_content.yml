@@ -1,0 +1,4 @@
+- name: Create a file with specific content
+  ansible.windows.win_copy:
+    content: "This is ansible work to create a sample file with connect...!!!"
+    dest: D:\Traning_Data\GitOps\ansible_work_sheet.txt
