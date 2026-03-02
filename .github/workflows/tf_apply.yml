@@ -39,7 +39,7 @@ jobs:
               run: terraform -chdir="../test/Infra/Azure_Kubernetes_Clusters/" plan -generate-config-out=generated.tf
               #continue-on-error: true
             
-
+ 
             - name: Terraform plan Status
               if: steps.plan.outcome == 'failure'
               run: exit 1
