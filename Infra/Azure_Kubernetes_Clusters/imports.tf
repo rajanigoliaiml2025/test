@@ -9,17 +9,17 @@
 
 import {
    to = azurerm_resource_group.rg-app-service
-   id = "/subscriptions/074224e5-1185-47a9-958d-3c25c1df9ebc/resourceGroups/RG-DSCU-app-service-00003"
+   id = "/subscriptions/da248db6-e390-45c5-953c-f848efd2e3b0/resourceGroups/RG-DSCU-app-service-00003"
 }
 
 #import {
-#  to = azurerm_kubernetes_cluster.aks
-#  id = "/subscriptions/074224e5-1185-47a9-958d-3c25c1df9ebc/resourceGroups/RG-DSCU-SecCluster-03/providers/Microsoft.ContainerService/managedClusters/AKS-DSCU-SecCluster"
+ # to = azurerm_kubernetes_cluster.aks
+#  id = "/subscriptions/da248db6-e390-45c5-953c-f848efd2e3b0/resourceGroups/RG-DSCU-SecCluster-03/providers/Microsoft.ContainerService/managedClusters/AKS-DSCU-SecCluster"
 #}
 
 #import {
 #  to = azurerm_cognitive_account.ai-service-OpenAIs
-#  id = "/subscriptions/074224e5-1185-47a9-958d-3c25c1df9ebc/resourceGroups/RG-AI-Service-Resources/providers/Microsoft.CognitiveServices/accounts/oai-service-account-01"
+#  id = "/subscriptions/da248db6-e390-45c5-953c-f848efd2e3b0/resourceGroups/RG-AI-Service-Resources/providers/Microsoft.CognitiveServices/accounts/oai-service-account-01"
 #}
 
 #import {
